@@ -1,4 +1,5 @@
 import { ArrowRight, Play, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 const HeroSection = () => {
@@ -35,13 +36,17 @@ const HeroSection = () => {
 
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-            <Button className="btn-gradient text-lg h-14 px-8 gap-2">
-              I'm a Brand
-              <ArrowRight size={20} />
+            <Button className="btn-gradient text-lg h-14 px-8 gap-2" asChild>
+              <Link to="/auth?type=brand">
+                I'm a Brand
+                <ArrowRight size={20} />
+              </Link>
             </Button>
-            <Button className="btn-accent text-lg h-14 px-8 gap-2">
-              I'm a Creator
-              <ArrowRight size={20} />
+            <Button className="btn-accent text-lg h-14 px-8 gap-2" asChild>
+              <Link to="/auth?type=creator">
+                I'm a Creator
+                <ArrowRight size={20} />
+              </Link>
             </Button>
           </div>
 
