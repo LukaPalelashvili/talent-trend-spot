@@ -15,10 +15,12 @@ import NotFound from "./pages/NotFound";
 import BrandDashboard from "./pages/brand/BrandDashboard";
 import Discover from "./pages/brand/Discover";
 import SmartMatch from "./pages/brand/SmartMatch";
+import BrandSettings from "./pages/brand/BrandSettings";
 
 // Creator Pages
 import CreatorDashboard from "./pages/creator/CreatorDashboard";
 import SocialAccounts from "./pages/creator/SocialAccounts";
+import CreatorSettings from "./pages/creator/CreatorSettings";
 
 // Shared Pages
 import Messages from "./pages/Messages";
@@ -88,6 +90,11 @@ const App = () => (
                 <SavedProfiles />
               </ProtectedRoute>
             } />
+            <Route path="/brand/settings" element={
+              <ProtectedRoute requiredType="brand">
+                <BrandSettings />
+              </ProtectedRoute>
+            } />
             
             {/* Creator Routes */}
             <Route path="/creator/dashboard" element={
@@ -103,6 +110,11 @@ const App = () => (
             <Route path="/creator/saved" element={
               <ProtectedRoute requiredType="creator">
                 <SavedProfiles />
+              </ProtectedRoute>
+            } />
+            <Route path="/creator/settings" element={
+              <ProtectedRoute requiredType="creator">
+                <CreatorSettings />
               </ProtectedRoute>
             } />
             

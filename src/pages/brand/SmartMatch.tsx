@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Slider } from "@/components/ui/slider";
-import DashboardLayout from "@/components/dashboard/DashboardLayout";
+import MainLayout from "@/components/layout/MainLayout";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -171,8 +171,8 @@ const SmartMatch = () => {
   };
 
   return (
-    <DashboardLayout>
-      <div className="max-w-3xl mx-auto">
+    <MainLayout>
+      <div className="max-w-3xl mx-auto p-6">
         {step <= totalSteps && (
           <>
             {/* Header */}
@@ -477,7 +477,7 @@ const SmartMatch = () => {
           </div>
         )}
       </div>
-    </DashboardLayout>
+    </MainLayout>
   );
 };
 

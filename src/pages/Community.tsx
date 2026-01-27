@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import DashboardLayout from "@/components/dashboard/DashboardLayout";
+import MainLayout from "@/components/layout/MainLayout";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -239,8 +239,8 @@ const Community = () => {
   };
 
   return (
-    <DashboardLayout>
-      <div className="max-w-4xl mx-auto">
+    <MainLayout>
+      <div className="max-w-3xl mx-auto p-6">
         <div className="mb-8">
           <h1 className="font-display text-3xl font-bold mb-2">Community</h1>
           <p className="text-muted-foreground">
@@ -516,7 +516,7 @@ const Community = () => {
           </TabsContent>
         </Tabs>
       </div>
-    </DashboardLayout>
+    </MainLayout>
   );
 };
 

@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import DashboardLayout from "@/components/dashboard/DashboardLayout";
+import MainLayout from "@/components/layout/MainLayout";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -163,8 +163,8 @@ const SocialAccounts = () => {
   const availablePlatforms = platforms.filter((p) => !connectedPlatforms.includes(p.value));
 
   return (
-    <DashboardLayout>
-      <div className="max-w-4xl mx-auto">
+    <MainLayout>
+      <div className="max-w-3xl mx-auto p-6">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
@@ -385,7 +385,7 @@ const SocialAccounts = () => {
           </p>
         </div>
       </div>
-    </DashboardLayout>
+    </MainLayout>
   );
 };
 
