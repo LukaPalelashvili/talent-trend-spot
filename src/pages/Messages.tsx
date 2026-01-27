@@ -4,7 +4,7 @@ import { Send, Search, User, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import DashboardLayout from "@/components/dashboard/DashboardLayout";
+import MainLayout from "@/components/layout/MainLayout";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -261,8 +261,8 @@ const Messages = () => {
   );
 
   return (
-    <DashboardLayout>
-      <div className="h-[calc(100vh-8rem)] flex rounded-2xl overflow-hidden border border-border bg-card">
+    <MainLayout showGroupsPanel={false}>
+      <div className="h-[calc(100vh-4rem)] flex border border-border bg-card">
         {/* Conversations List */}
         <div
           className={cn(
@@ -448,7 +448,7 @@ const Messages = () => {
           )}
         </div>
       </div>
-    </DashboardLayout>
+    </MainLayout>
   );
 };
 

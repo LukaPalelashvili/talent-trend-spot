@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Search, Sparkles, TrendingUp, Users, MessageSquare, Heart, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import DashboardLayout from "@/components/dashboard/DashboardLayout";
+import MainLayout from "@/components/layout/MainLayout";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -76,8 +76,8 @@ const BrandDashboard = () => {
   };
 
   return (
-    <DashboardLayout>
-      <div className="max-w-6xl mx-auto">
+    <MainLayout>
+      <div className="max-w-4xl mx-auto p-6">
         {/* Welcome Header */}
         <div className="mb-8">
           <h1 className="font-display text-3xl md:text-4xl font-bold mb-2">
@@ -220,7 +220,7 @@ const BrandDashboard = () => {
           </div>
         </div>
       </div>
-    </DashboardLayout>
+    </MainLayout>
   );
 };
 

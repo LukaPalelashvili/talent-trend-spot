@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import DashboardLayout from "@/components/dashboard/DashboardLayout";
+import MainLayout from "@/components/layout/MainLayout";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -166,8 +166,8 @@ const Discover = () => {
   ].filter(Boolean);
 
   return (
-    <DashboardLayout>
-      <div className="max-w-6xl mx-auto">
+    <MainLayout>
+      <div className="max-w-5xl mx-auto p-6">
         {/* Header */}
         <div className="mb-6">
           <h1 className="font-display text-3xl font-bold mb-2">Discover Creators</h1>
@@ -372,7 +372,7 @@ const Discover = () => {
           </div>
         )}
       </div>
-    </DashboardLayout>
+    </MainLayout>
   );
 };
 

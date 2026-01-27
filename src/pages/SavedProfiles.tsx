@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Heart, MessageSquare, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import DashboardLayout from "@/components/dashboard/DashboardLayout";
+import MainLayout from "@/components/layout/MainLayout";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -96,8 +96,8 @@ const SavedProfiles = () => {
   };
 
   return (
-    <DashboardLayout>
-      <div className="max-w-4xl mx-auto">
+    <MainLayout>
+      <div className="max-w-3xl mx-auto p-6">
         <div className="mb-8">
           <h1 className="font-display text-3xl font-bold mb-2">Saved Profiles</h1>
           <p className="text-muted-foreground">
@@ -197,7 +197,7 @@ const SavedProfiles = () => {
           </div>
         )}
       </div>
-    </DashboardLayout>
+    </MainLayout>
   );
 };
 
