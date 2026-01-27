@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 const CTASection = () => {
@@ -16,9 +17,11 @@ const CTASection = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button className="btn-gradient text-lg h-14 px-8 gap-2">
-              Get Started Free
-              <ArrowRight size={20} />
+            <Button className="btn-gradient text-lg h-14 px-8 gap-2" asChild>
+              <Link to="/auth">
+                Get Started Free
+                <ArrowRight size={20} />
+              </Link>
             </Button>
             <Button variant="outline" className="btn-outline-subtle text-lg h-14 px-8">
               Schedule a Demo

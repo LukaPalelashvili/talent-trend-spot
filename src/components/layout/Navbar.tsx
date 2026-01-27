@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -41,11 +42,11 @@ const Navbar = () => {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
-            <Button variant="ghost" className="font-medium">
-              Log in
+            <Button variant="ghost" className="font-medium" asChild>
+              <Link to="/auth">Log in</Link>
             </Button>
-            <Button className="btn-gradient">
-              Get Started
+            <Button className="btn-gradient" asChild>
+              <Link to="/auth">Get Started</Link>
             </Button>
           </div>
 
@@ -73,11 +74,11 @@ const Navbar = () => {
                 </a>
               ))}
               <div className="flex flex-col gap-2 pt-4 border-t border-border">
-                <Button variant="ghost" className="w-full justify-center font-medium">
-                  Log in
+                <Button variant="ghost" className="w-full justify-center font-medium" asChild>
+                  <Link to="/auth">Log in</Link>
                 </Button>
-                <Button className="btn-gradient w-full">
-                  Get Started
+                <Button className="btn-gradient w-full" asChild>
+                  <Link to="/auth">Get Started</Link>
                 </Button>
               </div>
             </div>
