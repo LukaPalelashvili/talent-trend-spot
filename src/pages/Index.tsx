@@ -3,6 +3,7 @@ import HeroSection from "@/components/landing/HeroSection";
 import PlatformsSection from "@/components/landing/PlatformsSection";
 import HowItWorksSection from "@/components/landing/HowItWorksSection";
 import DiscoverSection from "@/components/landing/DiscoverSection";
+import TransformSection from "@/components/landing/TransformSection";
 import ForBrandsSection from "@/components/landing/ForBrandsSection";
 import ForCreatorsSection from "@/components/landing/ForCreatorsSection";
 import BecomeCreatorSection from "@/components/landing/BecomeCreatorSection";
@@ -19,6 +20,7 @@ const Index = () => {
         <PlatformsSection />
         <HowItWorksSection />
         <DiscoverSection />
+        <TransformSection />
         <ForBrandsSection />
         <ForCreatorsSection />
         <BecomeCreatorSection />
