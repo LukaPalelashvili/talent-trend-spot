@@ -9,7 +9,7 @@ import MagicWriteSection from "@/components/landing/MagicWriteSection";
 import AppsSliderSection from "@/components/landing/AppsSliderSection";
 import SafetySection from "@/components/landing/SafetySection";
 import WhatWeDoSection from "@/components/landing/WhatWeDoSection";
-import MagicExpandSection from "@/components/landing/MagicExpandSection";
+import ExpandReachSection from "@/components/landing/ExpandReachSection";
 import PricingSection from "@/components/landing/PricingSection";
 import FAQSection from "@/components/landing/FAQSection";
 import ForBrandsSection from "@/components/landing/ForBrandsSection";
@@ -34,7 +34,7 @@ const Index = () => {
         <AppsSliderSection />
         <SafetySection />
         <WhatWeDoSection />
-        <MagicExpandSection />
+        <ExpandReachSection />
         <PricingSection />
         <FAQSection />
         <ForBrandsSection />

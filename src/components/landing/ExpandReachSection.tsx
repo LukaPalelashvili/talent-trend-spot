@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Crown, ChevronDown } from "lucide-react";
+import { Rocket, ChevronDown } from "lucide-react";
 import expandHeroImage from "@/assets/expand-hero-creator.jpg";
 
 const MagicExpandSection = () => {
@@ -49,28 +49,27 @@ const MagicExpandSection = () => {
           <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-5 md:p-6 shadow-2xl">
             <div className="flex items-center gap-3 mb-3">
               {/* Badge */}
-              <span className="inline-flex items-center gap-1 text-xs font-medium bg-gray-900 text-white px-3 py-1 rounded-full">
-                <Crown size={12} />
-                PRO
+              <span className="inline-flex items-center gap-1 text-xs font-medium bg-purple-600 text-white px-3 py-1 rounded-full">
+                <Rocket size={12} />
+                GROW
               </span>
               {/* Title */}
               <h2 className="font-display text-xl md:text-2xl font-bold text-gray-900">
-                Magic Expand
+                Expand Your Reach
               </h2>
             </div>
             
             {/* Description */}
             <p className="text-gray-700 text-sm md:text-base leading-relaxed mb-5">
-              Seamlessly extend an image in any direction for the perfect shot. Fix awkward framing, save zoomed-in images, or turn a vertical shot into a horizontal one in seconds.
+              Connect with brands that align with your values and grow your influence. Our AI-powered matching helps you find the perfect collaboration opportunities to take your content career to the next level.
             </p>
             
             {/* Buttons */}
             <div className="flex flex-wrap gap-3">
               <Button
-                variant="outline"
-                className="rounded-full px-6 py-2 h-auto text-sm font-medium bg-white border-gray-300 hover:bg-gray-50"
+                className="rounded-full px-6 py-2 h-auto text-sm font-medium bg-purple-600 hover:bg-purple-700 text-white"
               >
-                Try Magic Expand
+                Start Growing
               </Button>
               <Button
                 variant="ghost"
