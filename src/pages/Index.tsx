@@ -8,6 +8,7 @@ import MagicMediaSection from "@/components/landing/MagicMediaSection";
 import MagicWriteSection from "@/components/landing/MagicWriteSection";
 import AppsSliderSection from "@/components/landing/AppsSliderSection";
 import SafetySection from "@/components/landing/SafetySection";
+import WhatWeDoSection from "@/components/landing/WhatWeDoSection";
 import ForBrandsSection from "@/components/landing/ForBrandsSection";
 import ForCreatorsSection from "@/components/landing/ForCreatorsSection";
 import BecomeCreatorSection from "@/components/landing/BecomeCreatorSection";
@@ -29,6 +30,7 @@ const Index = () => {
         <MagicWriteSection />
         <AppsSliderSection />
         <SafetySection />
+        <WhatWeDoSection />
         <ForBrandsSection />
         <ForCreatorsSection />
         <BecomeCreatorSection />
