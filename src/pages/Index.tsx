@@ -10,6 +10,7 @@ import AppsSliderSection from "@/components/landing/AppsSliderSection";
 import SafetySection from "@/components/landing/SafetySection";
 import WhatWeDoSection from "@/components/landing/WhatWeDoSection";
 import MagicExpandSection from "@/components/landing/MagicExpandSection";
+import PricingSection from "@/components/landing/PricingSection";
 import ForBrandsSection from "@/components/landing/ForBrandsSection";
 import ForCreatorsSection from "@/components/landing/ForCreatorsSection";
 import BecomeCreatorSection from "@/components/landing/BecomeCreatorSection";
@@ -33,6 +34,7 @@ const Index = () => {
         <SafetySection />
         <WhatWeDoSection />
         <MagicExpandSection />
+        <PricingSection />
         <ForBrandsSection />
         <ForCreatorsSection />
         <BecomeCreatorSection />
