@@ -23,14 +23,14 @@ const FeatureCard = ({
   showLearnMore = true,
 }: FeatureCardProps) => {
   return (
-    <div className="flex flex-col h-full bg-white rounded-3xl overflow-hidden border border-gray-100">
+    <div className={`flex flex-col h-full rounded-3xl overflow-hidden ${bgColor} min-h-[580px] md:min-h-[640px]`}>
       {/* Visual Area */}
-      <div className={`${bgColor} p-6 md:p-8 min-h-[280px] md:min-h-[320px] flex items-center justify-center relative`}>
+      <div className="p-6 md:p-8 min-h-[280px] md:min-h-[320px] flex items-center justify-center relative flex-1">
         {visual}
       </div>
 
       {/* Content Area */}
-      <div className="p-6 md:p-8 flex flex-col flex-1">
+      <div className="p-6 md:p-8 pt-0">
         {/* Badges */}
         <div className="flex items-center gap-2 mb-3">
           {isPro && (
@@ -40,7 +40,7 @@ const FeatureCard = ({
             </span>
           )}
           {isBeta && (
-            <span className="text-xs font-medium bg-gray-200 text-gray-700 px-3 py-1 rounded-full">
+            <span className="text-xs font-medium bg-white/80 text-gray-700 px-3 py-1 rounded-full">
               BETA
             </span>
           )}
@@ -52,7 +52,7 @@ const FeatureCard = ({
         </h3>
 
         {/* Description */}
-        <p className="text-gray-600 text-base leading-relaxed mb-6 flex-1">
+        <p className="text-gray-700 text-base leading-relaxed mb-6">
           {description}
         </p>
 
