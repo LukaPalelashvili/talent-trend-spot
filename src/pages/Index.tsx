@@ -6,6 +6,7 @@ import DiscoverSection from "@/components/landing/DiscoverSection";
 import TransformSection from "@/components/landing/TransformSection";
 import MagicMediaSection from "@/components/landing/MagicMediaSection";
 import MagicWriteSection from "@/components/landing/MagicWriteSection";
+import AppsSliderSection from "@/components/landing/AppsSliderSection";
 import ForBrandsSection from "@/components/landing/ForBrandsSection";
 import ForCreatorsSection from "@/components/landing/ForCreatorsSection";
 import BecomeCreatorSection from "@/components/landing/BecomeCreatorSection";
@@ -25,6 +26,7 @@ const Index = () => {
         <TransformSection />
         <MagicMediaSection />
         <MagicWriteSection />
+        <AppsSliderSection />
         <ForBrandsSection />
         <ForCreatorsSection />
         <BecomeCreatorSection />
