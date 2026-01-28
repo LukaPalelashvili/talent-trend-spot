@@ -1,3 +1,5 @@
+import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/animations/ScrollReveal";
+
 const platforms = [
   { name: "TikTok", icon: "📱", color: "from-[#00F2EA] to-[#FF0050]" },
   { name: "YouTube", icon: "▶️", color: "from-[#FF0000] to-[#CC0000]" },
@@ -9,26 +11,28 @@ const platforms = [
 
 const PlatformsSection = () => {
   return (
-    <section className="py-20 bg-white border-b border-border/30">
+    <section className="py-20 bg-white border-b border-border/30 relative overflow-hidden">
       <div className="container">
-        <p className="text-center text-muted-foreground mb-10 font-medium text-lg">
-          Trusted by creators from all major platforms
-        </p>
-        <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
-          {platforms.map((platform, index) => (
-            <div
-              key={platform.name}
-              className="group relative px-6 py-3 rounded-full bg-secondary/50 hover:bg-white hover:shadow-lg transition-all duration-300 cursor-pointer"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <div className={`absolute inset-0 rounded-full bg-gradient-to-r ${platform.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
-              <div className="flex items-center gap-3 relative">
-                <span className="text-2xl">{platform.icon}</span>
-                <span className="font-medium text-foreground">{platform.name}</span>
+        <ScrollReveal>
+          <p className="text-center text-muted-foreground mb-10 font-medium text-lg">
+            Trusted by creators from all major platforms
+          </p>
+        </ScrollReveal>
+        <StaggerContainer className="flex flex-wrap items-center justify-center gap-4 md:gap-6" staggerDelay={0.08}>
+          {platforms.map((platform) => (
+            <StaggerItem key={platform.name}>
+              <div
+                className="group relative px-6 py-3 rounded-full bg-secondary/50 hover:bg-white hover:shadow-lg transition-all duration-300 cursor-pointer"
+              >
+                <div className={`absolute inset-0 rounded-full bg-gradient-to-r ${platform.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
+                <div className="flex items-center gap-3 relative">
+                  <span className="text-2xl">{platform.icon}</span>
+                  <span className="font-medium text-foreground">{platform.name}</span>
+                </div>
               </div>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );

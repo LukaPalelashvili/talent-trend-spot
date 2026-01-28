@@ -1,4 +1,5 @@
 import { Star, Quote } from "lucide-react";
+import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/animations/ScrollReveal";
 
 const testimonials = [
   {
@@ -32,58 +33,63 @@ const testimonials = [
 
 const TestimonialsSection = () => {
   return (
-    <section id="testimonials" className="py-24 md:py-32 bg-white">
+    <section id="testimonials" className="py-24 md:py-32 bg-white relative overflow-hidden">
       <div className="container">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="badge-new mb-6 inline-block">Testimonials</span>
-          <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">
-            Loved by{" "}
-            <span className="gradient-text">Thousands</span>
-          </h2>
-          <p className="text-muted-foreground text-lg">
-            See what brands and creators are saying about their experience with Nexly.
-          </p>
+          <ScrollReveal delay={0}>
+            <span className="badge-new mb-6 inline-block">Testimonials</span>
+          </ScrollReveal>
+          <ScrollReveal delay={0.1}>
+            <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">
+              Loved by{" "}
+              <span className="gradient-text">Thousands</span>
+            </h2>
+          </ScrollReveal>
+          <ScrollReveal delay={0.2}>
+            <p className="text-muted-foreground text-lg">
+              See what brands and creators are saying about their experience with Nexly.
+            </p>
+          </ScrollReveal>
         </div>
 
         {/* Testimonials Grid */}
-        <div className="grid md:grid-cols-3 gap-8">
+        <StaggerContainer className="grid md:grid-cols-3 gap-8" staggerDelay={0.15}>
           {testimonials.map((testimonial, index) => (
-            <div
-              key={index}
-              className="card-interactive p-8 relative bg-white"
-            >
-              {/* Quote Icon */}
-              <div className="absolute top-6 right-6 text-primary/10">
-                <Quote size={40} />
-              </div>
-
-              {/* Rating */}
-              <div className="flex gap-1 mb-6">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star key={i} size={18} className="fill-yellow-400 text-yellow-400" />
-                ))}
-              </div>
-
-              {/* Content */}
-              <p className="text-foreground mb-8 leading-relaxed relative z-10">
-                "{testimonial.content}"
-              </p>
-
-              {/* Author */}
-              <div className="flex items-center gap-4">
-                <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${testimonial.gradient} flex items-center justify-center text-white font-bold text-sm`}>
-                  {testimonial.avatar}
+            <StaggerItem key={index}>
+              <div className="card-interactive p-8 relative bg-white h-full">
+                {/* Quote Icon */}
+                <div className="absolute top-6 right-6 text-primary/10">
+                  <Quote size={40} />
                 </div>
-                <div>
-                  <div className="font-semibold">{testimonial.name}</div>
-                  <div className="text-sm text-muted-foreground">{testimonial.role}</div>
-                  <div className="text-xs text-primary font-medium">{testimonial.followers}</div>
+
+                {/* Rating */}
+                <div className="flex gap-1 mb-6">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star key={i} size={18} className="fill-yellow-400 text-yellow-400" />
+                  ))}
+                </div>
+
+                {/* Content */}
+                <p className="text-foreground mb-8 leading-relaxed relative z-10">
+                  "{testimonial.content}"
+                </p>
+
+                {/* Author */}
+                <div className="flex items-center gap-4">
+                  <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${testimonial.gradient} flex items-center justify-center text-white font-bold text-sm`}>
+                    {testimonial.avatar}
+                  </div>
+                  <div>
+                    <div className="font-semibold">{testimonial.name}</div>
+                    <div className="text-sm text-muted-foreground">{testimonial.role}</div>
+                    <div className="text-xs text-primary font-medium">{testimonial.followers}</div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );
