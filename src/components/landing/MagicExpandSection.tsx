@@ -12,15 +12,15 @@ const MagicExpandSection = () => {
     offset: ["start end", "end start"],
   });
 
-  // Transform values based on scroll progress
-  const scale = useTransform(scrollYProgress, [0, 0.3, 0.5], [0.6, 0.85, 1]);
-  const borderRadius = useTransform(scrollYProgress, [0, 0.3, 0.5], [48, 24, 0]);
-  const opacity = useTransform(scrollYProgress, [0, 0.15], [0, 1]);
+  // Transform values based on scroll progress - faster animation with compressed ranges
+  const scale = useTransform(scrollYProgress, [0, 0.12, 0.22], [0.6, 0.85, 1]);
+  const borderRadius = useTransform(scrollYProgress, [0, 0.12, 0.22], [48, 24, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 0.08], [0, 1]);
 
   return (
     <section 
       ref={containerRef}
-      className="min-h-[200vh] bg-[#faf9f7] relative"
+      className="min-h-[150vh] bg-[#faf9f7] relative"
     >
       {/* Sticky container */}
       <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
@@ -87,29 +87,29 @@ const MagicExpandSection = () => {
           <motion.div 
             className="absolute top-4 left-4 w-4 h-4 border-t-2 border-l-2 border-purple-400 rounded-tl-lg"
             style={{ 
-              opacity: useTransform(scrollYProgress, [0.3, 0.5], [1, 0]),
-              scale: useTransform(scrollYProgress, [0.3, 0.5], [1, 0.5]),
+              opacity: useTransform(scrollYProgress, [0.12, 0.22], [1, 0]),
+              scale: useTransform(scrollYProgress, [0.12, 0.22], [1, 0.5]),
             }}
           />
           <motion.div 
             className="absolute top-4 right-4 w-4 h-4 border-t-2 border-r-2 border-purple-400 rounded-tr-lg"
             style={{ 
-              opacity: useTransform(scrollYProgress, [0.3, 0.5], [1, 0]),
-              scale: useTransform(scrollYProgress, [0.3, 0.5], [1, 0.5]),
+              opacity: useTransform(scrollYProgress, [0.12, 0.22], [1, 0]),
+              scale: useTransform(scrollYProgress, [0.12, 0.22], [1, 0.5]),
             }}
           />
           <motion.div 
             className="absolute bottom-4 left-4 w-4 h-4 border-b-2 border-l-2 border-purple-400 rounded-bl-lg"
             style={{ 
-              opacity: useTransform(scrollYProgress, [0.3, 0.5], [1, 0]),
-              scale: useTransform(scrollYProgress, [0.3, 0.5], [1, 0.5]),
+              opacity: useTransform(scrollYProgress, [0.12, 0.22], [1, 0]),
+              scale: useTransform(scrollYProgress, [0.12, 0.22], [1, 0.5]),
             }}
           />
           <motion.div 
             className="absolute bottom-4 right-4 w-4 h-4 border-b-2 border-r-2 border-purple-400 rounded-br-lg"
             style={{ 
-              opacity: useTransform(scrollYProgress, [0.3, 0.5], [1, 0]),
-              scale: useTransform(scrollYProgress, [0.3, 0.5], [1, 0.5]),
+              opacity: useTransform(scrollYProgress, [0.12, 0.22], [1, 0]),
+              scale: useTransform(scrollYProgress, [0.12, 0.22], [1, 0.5]),
             }}
           />
         </motion.div>
