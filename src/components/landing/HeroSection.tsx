@@ -23,13 +23,13 @@ const HeroSection = () => {
             </div>
           </div>
 
-          {/* Main Headline */}
-          <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white leading-[1.1] mb-8 animate-slide-up text-shadow-hero">
+          {/* Main Headline - Canva style: very large, bold, pure white */}
+          <h1 className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-[120px] font-bold text-white leading-[1.05] mb-8 animate-slide-up tracking-tight">
             Creator Studio
           </h1>
 
-          {/* Subheadline */}
-          <p className="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto mb-12 animate-slide-up-delayed leading-relaxed">
+          {/* Subheadline - Canva style: smaller, semi-transparent white */}
+          <p className="text-lg md:text-xl lg:text-2xl text-white/70 max-w-3xl mx-auto mb-12 animate-slide-up-delayed leading-relaxed font-normal">
             All the power of influencer marketing, all in one place. Nexly brings together 
             brands and creators for authentic collaborations that drive real results.
           </p>
@@ -50,7 +50,7 @@ const HeroSection = () => {
             </Button>
           </div>
 
-          {/* Stats Row */}
+          {/* Stats Row - Canva style: white with semi-transparent labels */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto animate-slide-up" style={{ animationDelay: '0.5s', opacity: 0, animationFillMode: 'forwards' }}>
             {[
               { value: "50K+", label: "Active Creators" },
@@ -62,7 +62,7 @@ const HeroSection = () => {
                 <div className="font-display text-3xl md:text-4xl font-bold text-white mb-1">
                   {stat.value}
                 </div>
-                <div className="text-sm text-white/60">{stat.label}</div>
+                <div className="text-sm text-white/60 font-normal">{stat.label}</div>
               </div>
             ))}
           </div>

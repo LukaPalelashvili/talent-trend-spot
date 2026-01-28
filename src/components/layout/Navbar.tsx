@@ -22,7 +22,7 @@ const Navbar = () => {
             <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-white/20">
               <Sparkles className="w-5 h-5 text-white" />
             </div>
-            <span className="font-display font-bold text-xl text-white">
+            <span className="font-display font-bold text-xl text-white tracking-tight">
               Nexly
             </span>
           </Link>
@@ -33,7 +33,7 @@ const Navbar = () => {
               <a
                 key={link.name}
                 href={link.href}
-                className="text-sm text-white/80 hover:text-white font-medium transition-colors"
+                className="text-sm text-white hover:text-white/80 font-medium transition-colors"
               >
                 {link.name}
               </a>
@@ -42,11 +42,11 @@ const Navbar = () => {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
-            <Button variant="ghost" className="font-medium text-white hover:bg-white/20 hover:text-white" asChild>
-              <Link to="/auth">Log in</Link>
+            <Button variant="ghost" className="font-medium text-white hover:bg-transparent hover:text-white/80" asChild>
+              <Link to="/auth">Sign up</Link>
             </Button>
-            <Button className="bg-white text-purple-600 hover:bg-white/90 rounded-full px-6" asChild>
-              <Link to="/auth">Get Started</Link>
+            <Button className="bg-white text-[#7d2ae8] hover:bg-white/90 rounded-md px-5 font-medium" asChild>
+              <Link to="/auth">Log in</Link>
             </Button>
           </div>
 
@@ -67,18 +67,18 @@ const Navbar = () => {
                 <a
                   key={link.name}
                   href={link.href}
-                  className="text-white/80 hover:text-white font-medium transition-colors py-2"
+                  className="text-white hover:text-white/80 font-medium transition-colors py-2"
                   onClick={() => setIsOpen(false)}
                 >
                   {link.name}
                 </a>
               ))}
               <div className="flex flex-col gap-2 pt-4 border-t border-white/20">
-                <Button variant="ghost" className="w-full justify-center font-medium text-white hover:bg-white/20" asChild>
-                  <Link to="/auth">Log in</Link>
+                <Button variant="ghost" className="w-full justify-center font-medium text-white hover:bg-transparent hover:text-white/80" asChild>
+                  <Link to="/auth">Sign up</Link>
                 </Button>
-                <Button className="bg-white text-purple-600 hover:bg-white/90 w-full rounded-full" asChild>
-                  <Link to="/auth">Get Started</Link>
+                <Button className="bg-white text-[#7d2ae8] hover:bg-white/90 w-full rounded-md font-medium" asChild>
+                  <Link to="/auth">Log in</Link>
                 </Button>
               </div>
             </div>
