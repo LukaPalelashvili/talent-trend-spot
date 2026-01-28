@@ -53,7 +53,7 @@ const ProfileView = () => {
 
   const fetchProfile = async () => {
     const { data } = await supabase
-      .from("profiles")
+      .from("profiles_public")
       .select("*")
       .eq("id", id)
       .single();

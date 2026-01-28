@@ -51,7 +51,7 @@ const SavedProfiles = () => {
     // Fetch profiles
     const profileIds = data.map((s) => s.saved_profile_id);
     const { data: profiles } = await supabase
-      .from("profiles")
+      .from("profiles_public")
       .select("id, full_name, avatar_url, user_type, niche, total_followers, avg_engagement_rate, primary_platform, industry")
       .in("id", profileIds);
 

@@ -90,7 +90,7 @@ const Feed = () => {
   const fetchCreators = async () => {
     setLoading(true);
     let query = supabase
-      .from("profiles")
+      .from("profiles_public")
       .select("*")
       .eq("user_type", "creator");
 

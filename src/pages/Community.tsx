@@ -83,7 +83,7 @@ const Community = () => {
     // Fetch authors
     const authorIds = [...new Set(data.map((p) => p.author_id))];
     const { data: authors } = await supabase
-      .from("profiles")
+      .from("profiles_public")
       .select("id, full_name, avatar_url, user_type")
       .in("id", authorIds);
 
@@ -166,7 +166,7 @@ const Community = () => {
 
     const authorIds = [...new Set(data.map((c) => c.author_id))];
     const { data: authors } = await supabase
-      .from("profiles")
+      .from("profiles_public")
       .select("id, full_name, avatar_url")
       .in("id", authorIds);
 
