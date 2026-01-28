@@ -46,7 +46,7 @@ const MagicExpandSection = () => {
           className="absolute bottom-12 md:bottom-16 left-1/2 -translate-x-1/2 w-[90%] md:w-[60%]"
           style={{ opacity: cardOpacity }}
         >
-          <div className="bg-[#fef9c3]/95 backdrop-blur-sm rounded-2xl p-5 md:p-6 shadow-2xl">
+          <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-5 md:p-6 shadow-2xl">
             <div className="flex items-center gap-3 mb-3">
               {/* Badge */}
               <span className="inline-flex items-center gap-1 text-xs font-medium bg-gray-900 text-white px-3 py-1 rounded-full">
