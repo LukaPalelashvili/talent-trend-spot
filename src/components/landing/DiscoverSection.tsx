@@ -23,22 +23,26 @@ const FeatureCard = ({
   size = "large",
 }: FeatureCardProps) => {
   return (
-    <div className="flex flex-col h-full">
+    <div
+      className={`rounded-3xl ${bgColor} flex flex-col h-full overflow-hidden ${
+        size === "large" ? "min-h-[500px] md:min-h-[580px]" : "min-h-[450px] md:min-h-[520px]"
+      }`}
+    >
       {/* Image/Preview Area */}
       <div
-        className={`rounded-2xl ${bgColor} flex items-center justify-center relative overflow-hidden ${
-          size === "large" ? "h-80 md:h-96" : "h-64 md:h-80"
+        className={`flex items-center justify-center relative flex-1 ${
+          size === "large" ? "min-h-[240px] md:min-h-[300px]" : "min-h-[200px] md:min-h-[260px]"
         }`}
       >
         <div className="text-white/80">{icon}</div>
       </div>
 
       {/* Content Area */}
-      <div className="pt-6 flex flex-col flex-1">
+      <div className="p-6 md:p-8 pt-0">
         {/* Badges */}
         <div className="flex items-center gap-2 mb-3">
           {isNew && (
-            <span className="text-xs font-medium bg-gray-100 text-gray-800 px-3 py-1 rounded-full">
+            <span className="text-xs font-medium bg-white/90 text-gray-800 px-3 py-1 rounded-full">
               New
             </span>
           )}
@@ -56,14 +60,14 @@ const FeatureCard = ({
         </h3>
 
         {/* Description */}
-        <p className="text-gray-600 text-base leading-relaxed mb-6 flex-1">
+        <p className="text-gray-700 text-base leading-relaxed mb-6">
           {description}
         </p>
 
         {/* CTA Button */}
         <Button
           variant="outline"
-          className="w-fit rounded-full px-6 py-2 h-auto text-sm font-medium border-gray-300 hover:bg-gray-50 hover:border-gray-400 transition-colors"
+          className="w-fit rounded-full px-6 py-2 h-auto text-sm font-medium bg-white border-gray-300 hover:bg-gray-50 hover:border-gray-400 transition-colors"
         >
           {ctaText}
         </Button>
@@ -82,7 +86,7 @@ const DiscoverSection = () => {
         </h2>
 
         {/* First Row - Asymmetric Grid */}
-        <div className="grid md:grid-cols-5 gap-6 md:gap-8 mb-8">
+        <div className="grid md:grid-cols-5 gap-6 md:gap-8 mb-6 md:mb-8">
           {/* Large Card - 3 columns */}
           <div className="md:col-span-3">
             <FeatureCard
@@ -93,7 +97,7 @@ const DiscoverSection = () => {
               icon={
                 <div className="relative">
                   <div className="w-32 h-32 rounded-2xl bg-white/30 backdrop-blur-sm flex items-center justify-center">
-                    <Users size={64} strokeWidth={1.5} />
+                    <Users size={64} strokeWidth={1.5} className="text-gray-700" />
                   </div>
                   <div className="absolute -top-4 -left-4 bg-[#00b4d8] text-white px-3 py-1 rounded-lg text-sm font-medium">
                     AI Match
