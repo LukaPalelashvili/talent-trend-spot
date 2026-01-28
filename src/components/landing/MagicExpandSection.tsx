@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Crown, Sparkles, Zap } from "lucide-react";
+import { Crown, Sparkles, Zap, ChevronDown } from "lucide-react";
 import expandHeroImage from "@/assets/expand-hero-creator.jpg";
 
 const cards = [
@@ -10,9 +10,8 @@ const cards = [
     badge: "PRO",
     badgeIcon: Crown,
     title: "Magic Expand",
-    description: "Seamlessly extend an image in any direction for the perfect shot. Fix awkward framing, save zoomed-in images, or turn a vertical shot into a horizontal one in seconds.",
+    description: "Seamlessly extend an image in any direction for the perfect shot. Fix awkward framing in seconds.",
     primaryButton: "Try Magic Expand",
-    secondaryButton: "Learn more",
     bgColor: "bg-[#fef9c3]/95",
   },
   {
@@ -20,9 +19,8 @@ const cards = [
     badge: "NEW",
     badgeIcon: Sparkles,
     title: "Smart Crop",
-    description: "Automatically detect the best composition and crop your images to perfection. Let AI find the focal point and create stunning visuals instantly.",
+    description: "Automatically detect the best composition and crop your images to perfection instantly.",
     primaryButton: "Try Smart Crop",
-    secondaryButton: "Learn more",
     bgColor: "bg-[#d1fae5]/95",
   },
   {
@@ -30,9 +28,8 @@ const cards = [
     badge: "HOT",
     badgeIcon: Zap,
     title: "AI Enhance",
-    description: "Transform ordinary photos into extraordinary masterpieces. Enhance lighting, colors, and details with one click using advanced AI technology.",
+    description: "Transform ordinary photos into extraordinary masterpieces with one click.",
     primaryButton: "Try AI Enhance",
-    secondaryButton: "Learn more",
     bgColor: "bg-[#e0e7ff]/95",
   },
 ];
@@ -45,10 +42,13 @@ const MagicExpandSection = () => {
     offset: ["start start", "end end"],
   });
 
+  // Scroll indicator fades out as user starts scrolling
+  const scrollIndicatorOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
+
   return (
     <section 
       ref={containerRef}
-      className="h-[300vh] bg-[#faf9f7] relative"
+      className="h-[200vh] bg-[#faf9f7] relative"
     >
       {/* Sticky container */}
       <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
@@ -59,11 +59,11 @@ const MagicExpandSection = () => {
             alt="Creator with phone"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-black/10 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-transparent" />
         </div>
         
-        {/* Cards container - positioned to the left to not cover face */}
-        <div className="absolute left-8 md:left-16 lg:left-24 top-1/2 -translate-y-1/2 w-[90%] max-w-md perspective-1000">
+        {/* Cards container */}
+        <div className="absolute left-8 md:left-16 lg:left-24 top-1/2 -translate-y-1/2 w-[85%] max-w-sm h-[280px] md:h-[300px]">
           {cards.map((card, index) => (
             <CardItem 
               key={card.id} 
@@ -74,6 +74,20 @@ const MagicExpandSection = () => {
             />
           ))}
         </div>
+
+        {/* Scroll indicator */}
+        <motion.div 
+          style={{ opacity: scrollIndicatorOpacity }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        >
+          <span className="text-white/80 text-sm font-medium tracking-wide">Scroll to explore</span>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <ChevronDown className="w-6 h-6 text-white/80" />
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );
@@ -87,57 +101,54 @@ interface CardItemProps {
 }
 
 const CardItem = ({ card, index, scrollYProgress, totalCards }: CardItemProps) => {
-  // Calculate the scroll ranges for each card
+  // Faster transitions with tighter ranges
   const segmentSize = 1 / totalCards;
   const start = index * segmentSize;
+  const mid = start + segmentSize * 0.5;
   const end = (index + 1) * segmentSize;
   
-  // Card becomes visible at its start point and exits at its end point
+  // Snappy opacity transitions
   const opacity = useTransform(
     scrollYProgress,
-    [
-      start - segmentSize * 0.3, // Fade in starts
-      start,                     // Fully visible
-      end - segmentSize * 0.3,   // Start fading out
-      end,                       // Fully faded
-    ],
     index === 0 
-      ? [1, 1, 1, 0]  // First card starts visible
-      : [0, 1, 1, 0]   // Other cards fade in
+      ? [0, mid, end]
+      : [start, start + segmentSize * 0.15, mid, end],
+    index === 0 
+      ? [1, 1, 0]
+      : [0, 1, 1, 0]
   );
   
-  // Y position: starts below, comes to center, moves up
+  // Quick Y movement
   const y = useTransform(
     scrollYProgress,
-    [start - segmentSize * 0.3, start, end - segmentSize * 0.3, end],
     index === 0 
-      ? [0, 0, -80, -150]      // First card only moves up
-      : [100, 0, -80, -150]     // Other cards come from below
+      ? [0, mid, end]
+      : [start, start + segmentSize * 0.15, mid, end],
+    index === 0 
+      ? [0, 0, -100]
+      : [60, 0, 0, -100]
   );
   
-  // Rotation for 3D effect
+  // Subtle rotation
   const rotateX = useTransform(
     scrollYProgress,
-    [start - segmentSize * 0.3, start, end - segmentSize * 0.3, end],
     index === 0 
-      ? [0, 0, -8, -15]       // First card tilts as it exits
-      : [8, 0, -8, -15]        // Other cards tilt in and out
+      ? [0, mid, end]
+      : [start, start + segmentSize * 0.15, mid, end],
+    index === 0 
+      ? [0, 0, -6]
+      : [6, 0, 0, -6]
   );
   
-  // Scale effect for depth
+  // Scale for depth
   const scale = useTransform(
     scrollYProgress,
-    [start - segmentSize * 0.3, start, end - segmentSize * 0.3, end],
     index === 0 
-      ? [1, 1, 0.95, 0.9]
-      : [0.9, 1, 0.95, 0.9]
-  );
-  
-  // Z-index based on visibility
-  const zIndex = useTransform(
-    scrollYProgress,
-    [start, start + segmentSize * 0.1],
-    [totalCards - index, totalCards - index + 1]
+      ? [0, mid, end]
+      : [start, start + segmentSize * 0.15, mid, end],
+    index === 0 
+      ? [1, 1, 0.92]
+      : [0.92, 1, 1, 0.92]
   );
 
   const BadgeIcon = card.badgeIcon;
@@ -149,44 +160,36 @@ const CardItem = ({ card, index, scrollYProgress, totalCards }: CardItemProps) =
         y,
         rotateX,
         scale,
-        zIndex,
         transformStyle: "preserve-3d",
         transformOrigin: "center bottom",
+        zIndex: totalCards - index,
       }}
       className="absolute inset-0"
     >
-      <div className={`${card.bgColor} backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-2xl`}>
+      <div className={`${card.bgColor} backdrop-blur-sm rounded-2xl p-5 md:p-6 shadow-2xl h-full flex flex-col`}>
         {/* Badge */}
-        <span className="inline-flex items-center gap-1 text-xs font-medium bg-gray-900 text-white px-3 py-1 rounded-full mb-4">
+        <span className="inline-flex items-center gap-1 text-xs font-medium bg-gray-900 text-white px-3 py-1 rounded-full mb-3 w-fit">
           <BadgeIcon size={12} />
           {card.badge}
         </span>
         
         {/* Title */}
-        <h2 className="font-display text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+        <h2 className="font-display text-xl md:text-2xl font-bold text-gray-900 mb-2">
           {card.title}
         </h2>
         
         {/* Description */}
-        <p className="text-gray-700 text-sm md:text-base leading-relaxed mb-6">
+        <p className="text-gray-700 text-sm leading-relaxed mb-4 flex-grow">
           {card.description}
         </p>
         
-        {/* Buttons */}
-        <div className="flex flex-wrap gap-3">
-          <Button
-            variant="outline"
-            className="rounded-full px-6 py-2 h-auto text-sm font-medium bg-white border-gray-300 hover:bg-gray-50"
-          >
-            {card.primaryButton}
-          </Button>
-          <Button
-            variant="ghost"
-            className="rounded-full px-6 py-2 h-auto text-sm font-medium text-gray-700 hover:text-gray-900"
-          >
-            {card.secondaryButton}
-          </Button>
-        </div>
+        {/* Button */}
+        <Button
+          variant="outline"
+          className="rounded-full px-5 py-2 h-auto text-sm font-medium bg-white border-gray-300 hover:bg-gray-50 w-fit"
+        >
+          {card.primaryButton}
+        </Button>
       </div>
     </motion.div>
   );
