@@ -12,8 +12,8 @@ const MagicExpandSection = () => {
     offset: ["start start", "end end"],
   });
 
-  // Image fades out as user scrolls
-  const imageOpacity = useTransform(scrollYProgress, [0, 0.4, 0.7], [1, 0.6, 0]);
+  // Image fades in as user scrolls (0.3 -> 1)
+  const imageOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.3, 0.7, 1]);
   
   // Card stays visible throughout
   const cardOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 1]);
