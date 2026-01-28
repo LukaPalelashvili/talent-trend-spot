@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
@@ -10,22 +10,22 @@ const Navbar = () => {
     { name: "How It Works", href: "#how-it-works" },
     { name: "For Brands", href: "#for-brands" },
     { name: "For Creators", href: "#for-creators" },
-    { name: "Pricing", href: "#pricing" },
+    { name: "Testimonials", href: "#testimonials" },
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-xl border-b border-border/30">
       <div className="container mx-auto">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <a href="/" className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-xl gradient-primary flex items-center justify-center">
-              <span className="text-white font-bold text-lg">N</span>
+          <Link to="/" className="flex items-center gap-2">
+            <div className="w-9 h-9 rounded-xl gradient-hero-canva flex items-center justify-center">
+              <Sparkles className="w-5 h-5 text-white" />
             </div>
-            <span className="font-display font-bold text-xl text-foreground">
+            <span className="font-display font-bold text-xl gradient-text">
               Nexly
             </span>
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
@@ -33,7 +33,7 @@ const Navbar = () => {
               <a
                 key={link.name}
                 href={link.href}
-                className="text-muted-foreground hover:text-foreground font-medium transition-colors"
+                className="text-sm text-muted-foreground hover:text-foreground font-medium transition-colors"
               >
                 {link.name}
               </a>
@@ -45,7 +45,7 @@ const Navbar = () => {
             <Button variant="ghost" className="font-medium" asChild>
               <Link to="/auth">Log in</Link>
             </Button>
-            <Button className="btn-gradient" asChild>
+            <Button className="btn-gradient rounded-full px-6" asChild>
               <Link to="/auth">Get Started</Link>
             </Button>
           </div>
@@ -77,7 +77,7 @@ const Navbar = () => {
                 <Button variant="ghost" className="w-full justify-center font-medium" asChild>
                   <Link to="/auth">Log in</Link>
                 </Button>
-                <Button className="btn-gradient w-full" asChild>
+                <Button className="btn-gradient w-full rounded-full" asChild>
                   <Link to="/auth">Get Started</Link>
                 </Button>
               </div>
