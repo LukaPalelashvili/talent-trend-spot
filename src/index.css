@@ -138,12 +138,12 @@
 }
 
 @layer components {
-  /* Canva-style Hero Gradient - exact match */
+  /* Professional Hero Gradient - lighter, sophisticated */
   .gradient-hero-canva {
-    background: #3f6bdf;
+    background: hsl(220, 60%, 97%);
     background-image: 
-      linear-gradient(0deg, #fff 20%, transparent 60%),
-      linear-gradient(90deg, #08c2cc, #5a32fa 34%, #7d2ae8 70%);
+      linear-gradient(0deg, #fff 15%, transparent 50%),
+      linear-gradient(135deg, hsl(220, 70%, 96%) 0%, hsl(240, 50%, 94%) 30%, hsl(260, 40%, 92%) 60%, hsl(200, 50%, 95%) 100%);
   }
 
   /* Gradient Text - updated to match Canva */

@@ -21,13 +21,13 @@ const HeroSection = () => {
       {/* Animated background elements with parallax */}
       <div className="absolute inset-0 overflow-hidden">
         <ParallaxElement speed={0.3} direction="down">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-white/5 rounded-full blur-3xl animate-pulse-glow" />
+          <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl animate-pulse-glow" />
         </ParallaxElement>
         <ParallaxElement speed={0.5} direction="up">
-          <div className="absolute bottom-40 right-20 w-96 h-96 bg-cyan-400/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-40 right-20 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
         </ParallaxElement>
         <ParallaxElement speed={0.4} direction="down">
-          <div className="absolute top-1/2 left-1/3 w-64 h-64 bg-purple-300/10 rounded-full blur-3xl" />
+          <div className="absolute top-1/2 left-1/3 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
         </ParallaxElement>
       </div>
 
@@ -44,9 +44,9 @@ const HeroSection = () => {
             className="flex justify-center mb-6"
           >
             <div className="relative">
-              <Sparkles className="w-12 h-12 text-white animate-sparkle" strokeWidth={1.5} />
-              <Sparkles className="w-6 h-6 text-white/60 absolute -top-2 -right-4 animate-sparkle" style={{ animationDelay: '0.5s' }} strokeWidth={1.5} />
-              <Sparkles className="w-4 h-4 text-white/40 absolute -bottom-1 -left-3 animate-sparkle" style={{ animationDelay: '1s' }} strokeWidth={1.5} />
+              <Sparkles className="w-12 h-12 text-primary animate-sparkle" strokeWidth={1.5} />
+              <Sparkles className="w-6 h-6 text-primary/60 absolute -top-2 -right-4 animate-sparkle" style={{ animationDelay: '0.5s' }} strokeWidth={1.5} />
+              <Sparkles className="w-4 h-4 text-primary/40 absolute -bottom-1 -left-3 animate-sparkle" style={{ animationDelay: '1s' }} strokeWidth={1.5} />
             </div>
           </motion.div>
 
@@ -55,7 +55,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.25, 0.4, 0.25, 1] }}
-            className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-[120px] font-bold text-white leading-[1.05] mb-8 tracking-tight"
+            className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-[120px] font-bold text-foreground leading-[1.05] mb-8 tracking-tight"
           >
             Creator Studio
           </motion.h1>
@@ -65,7 +65,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.4, 0.25, 1] }}
-            className="text-lg md:text-xl lg:text-2xl text-white/70 max-w-3xl mx-auto mb-12 leading-relaxed font-normal"
+            className="text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed font-normal"
           >
             All the power of influencer marketing, all in one place. Nexly brings together 
             brands and creators for authentic collaborations that drive real results.
@@ -78,13 +78,13 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20"
           >
-            <Button className="btn-white text-lg h-14 px-10 gap-2 shadow-2xl" asChild>
+            <Button className="btn-gradient text-lg h-14 px-10 gap-2 shadow-2xl" asChild>
               <Link to="/auth?type=brand">
                 I'm a Brand
                 <ArrowRight size={20} />
               </Link>
             </Button>
-            <Button className="btn-outline-white text-lg h-14 px-10 gap-2" asChild>
+            <Button variant="outline" className="text-lg h-14 px-10 gap-2 border-primary/30 hover:bg-primary/5" asChild>
               <Link to="/auth?type=creator">
                 I'm a Creator
                 <ArrowRight size={20} />
@@ -112,10 +112,10 @@ const HeroSection = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.5 + index * 0.1, ease: [0.25, 0.4, 0.25, 1] }}
               >
-                <div className="font-display text-3xl md:text-4xl font-bold text-white mb-1">
+                <div className="font-display text-3xl md:text-4xl font-bold text-foreground mb-1">
                   {stat.value}
                 </div>
-                <div className="text-sm text-white/60 font-normal">{stat.label}</div>
+                <div className="text-sm text-muted-foreground font-normal">{stat.label}</div>
               </motion.div>
             ))}
           </motion.div>
