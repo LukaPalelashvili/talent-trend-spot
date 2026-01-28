@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Crown } from "lucide-react";
-import expandHeroImage from "@/assets/expand-hero-image.jpg";
+import expandHeroImage from "@/assets/expand-hero-creator.jpg";
 
 const MagicExpandSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
