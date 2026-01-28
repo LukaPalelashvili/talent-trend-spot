@@ -9,7 +9,7 @@ const MagicExpandSection = () => {
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end end"],
+    offset: ["start end", "end start"],
   });
 
   // Image fades in as user scrolls (0.3 -> 1)
@@ -24,10 +24,10 @@ const MagicExpandSection = () => {
   return (
     <section 
       ref={containerRef}
-      className="h-[150vh] bg-[#faf9f7] relative"
+      className="min-h-screen bg-[#faf9f7] relative"
     >
-      {/* Sticky container */}
-      <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
+      {/* Normal scrolling container */}
+      <div className="relative h-screen flex items-center justify-center overflow-hidden">
         {/* Background image with fade effect */}
         <motion.div 
           className="absolute inset-0"
