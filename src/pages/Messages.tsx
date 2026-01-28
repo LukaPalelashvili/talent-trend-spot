@@ -9,6 +9,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import { validateMessageContent } from "@/lib/validation";
 
 interface Conversation {
   id: string;
@@ -212,7 +213,14 @@ const Messages = () => {
 
   const sendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!profile || !selectedConversation || !newMessage.trim()) return;
+    if (!profile || !selectedConversation) return;
+
+    // Validate message content before submission
+    const validation = validateMessageContent(newMessage);
+    if (validation.success === false) {
+      toast({ title: "Validation Error", description: validation.error, variant: "destructive" });
+      return;
+    }
 
     setSending(true);
 
@@ -220,7 +228,7 @@ const Messages = () => {
       const { error } = await supabase.from("messages").insert({
         conversation_id: selectedConversation.id,
         sender_id: profile.id,
-        content: newMessage.trim(),
+        content: validation.data,
       });
 
       if (error) throw error;

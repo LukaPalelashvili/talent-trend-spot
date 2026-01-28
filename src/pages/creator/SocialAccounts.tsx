@@ -9,6 +9,7 @@ import MainLayout from "@/components/layout/MainLayout";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { socialAccountSchema } from "@/lib/validation";
 
 interface SocialAccount {
   id: string;
@@ -64,19 +65,40 @@ const SocialAccounts = () => {
 
   const handleAddAccount = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!profile || !newPlatform || !newUsername) return;
+    if (!profile) return;
+
+    // Validate all input fields
+    const validation = socialAccountSchema.safeParse({
+      platform: newPlatform || undefined,
+      username: newUsername,
+      profile_url: newProfileUrl || undefined,
+      followers: newFollowers ? parseInt(newFollowers) : undefined,
+      total_views: newViews ? parseInt(newViews) : undefined,
+      engagement_rate: newEngagement ? parseFloat(newEngagement) : undefined,
+    });
+
+    if (!validation.success) {
+      const firstError = validation.error.errors[0];
+      toast({ 
+        title: "Validation Error", 
+        description: firstError?.message || "Please check your input", 
+        variant: "destructive" 
+      });
+      return;
+    }
 
     setIsSubmitting(true);
 
     try {
+      const data = validation.data;
       const { error } = await supabase.from("social_accounts").insert({
         profile_id: profile.id,
-        platform: newPlatform as "youtube" | "tiktok" | "instagram" | "twitter" | "twitch" | "linkedin",
-        username: newUsername,
-        profile_url: newProfileUrl || null,
-        followers: parseInt(newFollowers) || 0,
-        total_views: parseInt(newViews) || 0,
-        engagement_rate: parseFloat(newEngagement) || 0,
+        platform: data.platform,
+        username: data.username,
+        profile_url: data.profile_url || null,
+        followers: Number.isNaN(data.followers) ? 0 : (data.followers || 0),
+        total_views: Number.isNaN(data.total_views) ? 0 : (data.total_views || 0),
+        engagement_rate: Number.isNaN(data.engagement_rate) ? 0 : (data.engagement_rate || 0),
         is_primary: accounts.length === 0,
       });
 
