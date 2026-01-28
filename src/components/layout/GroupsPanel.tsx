@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Users, Plus, Home, Search, MessageSquare, Heart, Sparkles, BarChart3, Link2 } from "lucide-react";
+import { Users, Plus, Home, Search, MessageSquare, Heart, Sparkles, BarChart3, Link2, Compass } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAuth } from "@/hooks/useAuth";
@@ -23,6 +23,7 @@ const GroupsPanel = () => {
 
   const mainNavItems = isBrand
     ? [
+        { icon: Compass, label: "Feed", path: "/feed" },
         { icon: Home, label: "Dashboard", path: "/brand/dashboard" },
         { icon: Search, label: "Discover", path: "/brand/discover" },
         { icon: Sparkles, label: "Smart Match", path: "/brand/smart-match" },
@@ -31,6 +32,7 @@ const GroupsPanel = () => {
         { icon: Users, label: "Community", path: "/community" },
       ]
     : [
+        { icon: Compass, label: "Feed", path: "/feed" },
         { icon: Home, label: "Dashboard", path: "/creator/dashboard" },
         { icon: BarChart3, label: "Analytics", path: "/creator/analytics" },
         { icon: Link2, label: "Social Accounts", path: "/creator/accounts" },
