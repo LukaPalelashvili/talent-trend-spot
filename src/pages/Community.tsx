@@ -9,6 +9,7 @@ import MainLayout from "@/components/layout/MainLayout";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { validatePostContent, validateCommentContent } from "@/lib/validation";
 
 interface Post {
   id: string;
@@ -124,14 +125,21 @@ const Community = () => {
   };
 
   const createPost = async () => {
-    if (!profile || !newPostContent.trim()) return;
+    if (!profile) return;
+
+    // Validate content before submission
+    const validation = validatePostContent(newPostContent);
+    if (validation.success === false) {
+      toast({ title: "Validation Error", description: validation.error, variant: "destructive" });
+      return;
+    }
 
     setIsPosting(true);
 
     try {
       const { error } = await supabase.from("posts").insert({
         author_id: profile.id,
-        content: newPostContent.trim(),
+        content: validation.data,
         post_type: postType,
       });
 
@@ -190,13 +198,22 @@ const Community = () => {
   };
 
   const addComment = async (postId: string) => {
-    if (!profile || !newComments[postId]?.trim()) return;
+    if (!profile) return;
+
+    const commentContent = newComments[postId];
+    
+    // Validate comment content before submission
+    const validation = validateCommentContent(commentContent || "");
+    if (validation.success === false) {
+      toast({ title: "Validation Error", description: validation.error, variant: "destructive" });
+      return;
+    }
 
     try {
       const { error } = await supabase.from("comments").insert({
         post_id: postId,
         author_id: profile.id,
-        content: newComments[postId].trim(),
+        content: validation.data,
       });
 
       if (error) throw error;

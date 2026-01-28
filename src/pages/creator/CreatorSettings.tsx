@@ -8,6 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import MainLayout from "@/components/layout/MainLayout";
+import { profileSchema } from "@/lib/validation";
 
 const CreatorSettings = () => {
   const { profile } = useAuth();
@@ -22,11 +23,20 @@ const CreatorSettings = () => {
 
   const handleSave = async () => {
     if (!profile) return;
+
+    // Validate form data before submission
+    const validation = profileSchema.safeParse(formData);
+    if (!validation.success) {
+      const firstError = validation.error.errors[0];
+      toast.error(firstError?.message || "Please check your input");
+      return;
+    }
+
     setSaving(true);
 
     const { error } = await supabase
       .from("profiles")
-      .update(formData)
+      .update(validation.data)
       .eq("id", profile.id);
 
     setSaving(false);
