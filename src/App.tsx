@@ -10,6 +10,7 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Onboarding from "./pages/Onboarding";
 import NotFound from "./pages/NotFound";
+import Feed from "./pages/Feed";
 
 // Brand Pages
 import BrandDashboard from "./pages/brand/BrandDashboard";
@@ -33,7 +34,7 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
-// Redirect based on user type
+// Redirect to feed after login
 const DashboardRedirect = () => {
   const { profile, loading } = useAuth();
   
@@ -49,7 +50,8 @@ const DashboardRedirect = () => {
     return <Navigate to="/auth" replace />;
   }
   
-  return <Navigate to={profile.user_type === "brand" ? "/brand/dashboard" : "/creator/dashboard"} replace />;
+  // Always redirect to the main feed
+  return <Navigate to="/feed" replace />;
 };
 
 const App = () => (
@@ -68,6 +70,13 @@ const App = () => (
             
             {/* Dashboard Redirect */}
             <Route path="/dashboard" element={<DashboardRedirect />} />
+            
+            {/* Main Feed - accessible to all authenticated users */}
+            <Route path="/feed" element={
+              <ProtectedRoute>
+                <Feed />
+              </ProtectedRoute>
+            } />
             
             {/* Brand Routes */}
             <Route path="/brand/dashboard" element={
