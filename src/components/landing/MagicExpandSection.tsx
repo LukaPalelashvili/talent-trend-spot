@@ -62,8 +62,8 @@ const MagicExpandSection = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-transparent" />
         </div>
         
-        {/* Cards container */}
-        <div className="absolute left-8 md:left-16 lg:left-24 top-1/2 -translate-y-1/2 w-[85%] max-w-sm h-[280px] md:h-[300px]">
+        {/* Cards container - bottom half, 60% width */}
+        <div className="absolute bottom-12 md:bottom-16 left-1/2 -translate-x-1/2 w-[90%] md:w-[60%] h-[200px] md:h-[220px]">
           {cards.map((card, index) => (
             <CardItem 
               key={card.id} 
@@ -166,17 +166,18 @@ const CardItem = ({ card, index, scrollYProgress, totalCards }: CardItemProps) =
       }}
       className="absolute inset-0"
     >
-      <div className={`${card.bgColor} backdrop-blur-sm rounded-2xl p-5 md:p-6 shadow-2xl h-full flex flex-col`}>
-        {/* Badge */}
-        <span className="inline-flex items-center gap-1 text-xs font-medium bg-gray-900 text-white px-3 py-1 rounded-full mb-3 w-fit">
-          <BadgeIcon size={12} />
-          {card.badge}
-        </span>
-        
-        {/* Title */}
-        <h2 className="font-display text-xl md:text-2xl font-bold text-gray-900 mb-2">
-          {card.title}
-        </h2>
+      <div className={`${card.bgColor} backdrop-blur-sm rounded-2xl p-4 md:p-5 shadow-2xl h-full flex flex-col`}>
+        <div className="flex items-center gap-3 mb-2">
+          {/* Badge */}
+          <span className="inline-flex items-center gap-1 text-xs font-medium bg-gray-900 text-white px-3 py-1 rounded-full">
+            <BadgeIcon size={12} />
+            {card.badge}
+          </span>
+          {/* Title */}
+          <h2 className="font-display text-lg md:text-xl font-bold text-gray-900">
+            {card.title}
+          </h2>
+        </div>
         
         {/* Description */}
         <p className="text-gray-700 text-sm leading-relaxed mb-4 flex-grow">
