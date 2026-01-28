@@ -16,7 +16,7 @@ import ForBrandsSection from "@/components/landing/ForBrandsSection";
 import ForCreatorsSection from "@/components/landing/ForCreatorsSection";
 import BecomeCreatorSection from "@/components/landing/BecomeCreatorSection";
 import TestimonialsSection from "@/components/landing/TestimonialsSection";
-import CTASection from "@/components/landing/CTASection";
+
 import Footer from "@/components/layout/Footer";
 
 const Index = () => {
@@ -41,7 +41,7 @@ const Index = () => {
         <ForCreatorsSection />
         <BecomeCreatorSection />
         <TestimonialsSection />
-        <CTASection />
+        
       </main>
       <Footer />
     </div>
