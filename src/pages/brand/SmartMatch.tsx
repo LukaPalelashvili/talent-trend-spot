@@ -89,7 +89,7 @@ const SmartMatch = () => {
       // For now, use a rule-based approach
       // In production, this would call an AI edge function
       let query = supabase
-        .from("profiles")
+        .from("profiles_public")
         .select("*")
         .eq("user_type", "creator");
 

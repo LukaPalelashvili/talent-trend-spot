@@ -94,7 +94,7 @@ const Messages = () => {
     );
 
     const { data: profiles } = await supabase
-      .from("profiles")
+      .from("profiles_public")
       .select("id, full_name, avatar_url, user_type")
       .in("id", otherIds);
 
@@ -127,7 +127,7 @@ const Messages = () => {
 
     // Fetch the other profile
     const { data: otherProfile } = await supabase
-      .from("profiles")
+      .from("profiles_public")
       .select("id, full_name, avatar_url, user_type")
       .eq("id", otherProfileId)
       .single();

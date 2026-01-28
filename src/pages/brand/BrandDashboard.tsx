@@ -31,7 +31,7 @@ const BrandDashboard = () => {
 
   const fetchFeaturedCreators = async () => {
     const { data } = await supabase
-      .from("profiles")
+      .from("profiles_public")
       .select("id, full_name, avatar_url, niche, total_followers, avg_engagement_rate, primary_platform")
       .eq("user_type", "creator")
       .order("total_followers", { ascending: false })
