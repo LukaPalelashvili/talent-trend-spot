@@ -24,14 +24,14 @@ const HeroSection = () => {
           </div>
 
           {/* Main Headline */}
-          <h1 className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-[120px] font-bold text-foreground leading-[1.05] mb-8 tracking-tight">
-            Creator Studio
+          <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-[90px] font-bold text-foreground leading-[1.1] mb-8 tracking-tight">
+            The Premier Marketplace Connecting Brands with Top-Tier Creators
           </h1>
 
           {/* Subheadline */}
           <p className="text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed font-normal">
-            All the power of influencer marketing, all in one place. Nexly brings together 
-            brands and creators for authentic collaborations that drive real results.
+            Streamline your influencer marketing. Discover verified talent, manage campaigns, 
+            and ensure secure payments—all in one platform.
           </p>
 
           {/* CTA Buttons */}
