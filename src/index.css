@@ -53,10 +53,10 @@
     --sidebar-border: 240 6% 90%;
     --sidebar-ring: 262 83% 58%;
 
-    /* Brand Colors - Orange accent to match hero image */
-    --gradient-start: 25 95% 55%;
-    --gradient-middle: 30 90% 50%;
-    --gradient-end: 35 85% 50%;
+    /* Brand Colors - Purple accent to match hero image */
+    --gradient-start: 262 83% 58%;
+    --gradient-middle: 270 75% 55%;
+    --gradient-end: 280 70% 60%;
     
     --purple: 262 83% 58%;
     --purple-light: 262 83% 95%;
