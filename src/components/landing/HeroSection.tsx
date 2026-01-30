@@ -96,7 +96,7 @@ const HeroSection = () => {
               <img
                 src={heroCreator}
                 alt="Creator using Nexly platform with social media analytics"
-                className="w-full h-auto rounded-3xl shadow-2xl"
+                className="w-full h-auto min-h-[500px] md:min-h-[600px] lg:min-h-[650px] object-cover rounded-3xl shadow-2xl"
               />
               
               {/* Floating stats card */}
