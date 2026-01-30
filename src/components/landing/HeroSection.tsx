@@ -83,7 +83,7 @@ const HeroSection = () => {
             <img
               src={heroCreator}
               alt="Creator using Nexly platform with social media analytics"
-              className="w-full h-auto min-h-[450px] md:min-h-[550px] lg:min-h-[620px] xl:min-h-[700px] object-cover object-top lg:rounded-l-3xl"
+              className="w-full h-auto max-h-[500px] lg:max-h-[550px] object-cover object-top lg:rounded-l-3xl"
             />
           </motion.div>
         </div>
