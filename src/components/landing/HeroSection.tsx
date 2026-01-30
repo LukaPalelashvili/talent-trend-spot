@@ -1,6 +1,8 @@
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import heroCreator from "@/assets/hero-creator.png";
 
 const HeroSection = () => {
   return (
@@ -12,65 +14,133 @@ const HeroSection = () => {
         <div className="absolute top-1/2 left-1/3 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
       </div>
 
-      <div className="container relative pt-32 md:pt-40 pb-32">
-        <div className="max-w-5xl mx-auto text-center">
-          {/* Sparkle icon */}
-          <div className="flex justify-center mb-6">
-            <div className="relative">
-              <Sparkles className="w-12 h-12 text-primary" strokeWidth={1.5} />
-              <Sparkles className="w-6 h-6 text-primary/60 absolute -top-2 -right-4" strokeWidth={1.5} />
-              <Sparkles className="w-4 h-4 text-primary/40 absolute -bottom-1 -left-3" strokeWidth={1.5} />
-            </div>
-          </div>
-
-          {/* Main Headline */}
-          <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-[90px] font-bold text-foreground leading-[1.1] mb-8 tracking-tight">
-            The Premier Marketplace Connecting Brands with Top-Tier Creators
-          </h1>
-
-          {/* Subheadline */}
-          <p className="text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed font-normal">
-            Streamline your influencer marketing. Discover verified talent, manage campaigns, 
-            and ensure secure payments—all in one platform.
-          </p>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
-            <Button className="btn-gradient text-lg h-14 px-10 gap-2 shadow-2xl" asChild>
-              <Link to="/auth?type=brand">
-                I'm a Brand
-                <ArrowRight size={20} />
-              </Link>
-            </Button>
-            <Button variant="outline" className="text-lg h-14 px-10 gap-2 border-primary/30 hover:bg-primary/5" asChild>
-              <Link to="/auth?type=creator">
-                I'm a Creator
-                <ArrowRight size={20} />
-              </Link>
-            </Button>
-          </div>
-
-          {/* Stats Row */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
-            {[
-              { value: "50K+", label: "Active Creators" },
-              { value: "10K+", label: "Brand Partners" },
-              { value: "1M+", label: "Collaborations" },
-              { value: "98%", label: "Success Rate" },
-            ].map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="font-display text-3xl md:text-4xl font-bold text-foreground mb-1">
-                  {stat.value}
-                </div>
-                <div className="text-sm text-muted-foreground font-normal">{stat.label}</div>
+      <div className="container relative pt-28 md:pt-36 pb-20">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+          {/* Left Content */}
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, ease: [0.25, 0.4, 0.25, 1] }}
+            className="text-left"
+          >
+            {/* Trust badges */}
+            <div className="flex items-center gap-3 mb-6">
+              <div className="flex -space-x-2">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <div
+                    key={i}
+                    className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 border-2 border-white"
+                  />
+                ))}
               </div>
-            ))}
-          </div>
+              <span className="text-sm text-muted-foreground">
+                Trusted by <span className="font-semibold text-foreground">50K+</span> creators
+              </span>
+            </div>
+
+            {/* Main Headline */}
+            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-[64px] font-bold text-foreground leading-[1.1] mb-6 tracking-tight">
+              The Premier Marketplace Connecting{" "}
+              <span className="gradient-text">Brands</span> with Top-Tier{" "}
+              <span className="gradient-text">Creators</span>
+            </h1>
+
+            {/* Subheadline */}
+            <p className="text-lg md:text-xl text-muted-foreground max-w-xl mb-8 leading-relaxed font-normal">
+              Streamline your influencer marketing. Discover verified talent, manage campaigns, 
+              and ensure secure payments—all in one platform.
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row items-start gap-4 mb-8">
+              <Button className="btn-gradient text-lg h-14 px-10 gap-2 shadow-2xl" asChild>
+                <Link to="/auth?type=brand">
+                  I'm a Brand
+                  <ArrowRight size={20} />
+                </Link>
+              </Button>
+              <Button variant="outline" className="text-lg h-14 px-10 gap-2 border-primary/30 hover:bg-primary/5" asChild>
+                <Link to="/auth?type=creator">
+                  I'm a Creator
+                  <ArrowRight size={20} />
+                </Link>
+              </Button>
+            </div>
+
+            {/* Trust indicators */}
+            <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <span className="text-lg">✋</span>
+                <span>No credit card required</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-lg">🌱</span>
+                <span>Cancel anytime</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-lg">⚡</span>
+                <span>5min set-up</span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Right Visual - Hero Image */}
+          <motion.div
+            initial={{ opacity: 0, x: 40, scale: 0.95 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.4, 0.25, 1] }}
+            className="relative lg:pl-8"
+          >
+            <div className="relative">
+              {/* Main hero image */}
+              <img
+                src={heroCreator}
+                alt="Creator using Nexly platform with social media analytics"
+                className="w-full h-auto rounded-3xl shadow-2xl"
+              />
+              
+              {/* Floating stats card */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.8 }}
+                className="absolute -bottom-4 -left-4 md:-left-8 bg-white rounded-2xl shadow-xl p-4 border border-border/50"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+                    <span className="text-white text-lg">📈</span>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-foreground">98%</div>
+                    <div className="text-xs text-muted-foreground">Success Rate</div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Floating partnerships card */}
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 1 }}
+                className="absolute -top-4 -right-4 md:-right-8 bg-white rounded-2xl shadow-xl p-4 border border-border/50"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center">
+                    <span className="text-white text-lg">🤝</span>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-foreground">1M+</div>
+                    <div className="text-xs text-muted-foreground">Collaborations</div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
         </div>
       </div>
 
       {/* Gradient fade to white at bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-white to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent pointer-events-none" />
     </section>
   );
 };
