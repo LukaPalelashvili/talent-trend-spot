@@ -40,6 +40,22 @@ const VideoShowcaseSection = () => {
             />
           </div>
         </motion.div>
+
+        {/* CTA Button */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="text-center mt-10"
+        >
+          <a
+            href="/auth"
+            className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white rounded-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg hover:shadow-xl transition-all duration-300"
+          >
+            Get Started Free
+          </a>
+        </motion.div>
       </div>
     </section>
   );
