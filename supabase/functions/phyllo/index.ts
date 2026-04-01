@@ -5,7 +5,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-const PHYLLO_BASE_URL = "https://api.staging.getphyllo.com";
+const PHYLLO_BASE_URL = "https://api.sandbox.getphyllo.com";
 
 function getPhylloAuthHeader(): string {
   const clientId = Deno.env.get("PHYLLO_CLIENT_ID");
