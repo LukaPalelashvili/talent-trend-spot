@@ -1,5 +1,9 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.93.2";
-import { corsHeaders } from "https://esm.sh/@supabase/supabase-js@2.95.0/cors";
+
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+};
 
 const PHYLLO_BASE_URL = "https://api.getphyllo.com";
 
@@ -8,13 +12,6 @@ function getPhylloAuthHeader(): string {
   const secret = Deno.env.get("PHYLLO_SECRET");
   if (!clientId || !secret) throw new Error("Phyllo credentials not configured");
   return "Basic " + btoa(`${clientId}:${secret}`);
-}
-
-function supabaseAdmin() {
-  return createClient(
-    Deno.env.get("SUPABASE_URL")!,
-    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
-  );
 }
 
 async function phylloFetch(path: string, options: RequestInit = {}) {
