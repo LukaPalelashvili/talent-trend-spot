@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Plus, Link2, Trash2, Star, Check } from "lucide-react";
+import { useState, useEffect, useCallback } from "react";
+import { Plus, Link2, Trash2, Star, Zap, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -37,6 +37,8 @@ const SocialAccounts = () => {
   const [accounts, setAccounts] = useState<SocialAccount[]>([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [phylloLoading, setPhylloLoading] = useState(false);
+  const [phylloSyncing, setPhylloSyncing] = useState(false);
 
   // New account form
   const [newPlatform, setNewPlatform] = useState("");
@@ -63,11 +65,151 @@ const SocialAccounts = () => {
     setLoading(false);
   };
 
+  // ─── Phyllo Connect Flow ──────────────────────────────────────
+  const handlePhylloConnect = useCallback(async () => {
+    if (!profile) return;
+    setPhylloLoading(true);
+
+    try {
+      // 1. Get SDK token from our edge function
+      const { data, error } = await supabase.functions.invoke("phyllo", {
+        body: null,
+        headers: {},
+      });
+
+      // Use query params approach
+      const session = await supabase.auth.getSession();
+      const token = session.data.session?.access_token;
+      if (!token) throw new Error("Not authenticated");
+
+      const res = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/phyllo?action=create_token`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+          },
+        }
+      );
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Failed to create Phyllo token");
+      }
+
+      const { sdk_token, user_id: phylloUserId } = await res.json();
+
+      // 2. Load Phyllo Connect SDK
+      await loadPhylloSDK();
+
+      // 3. Initialize Connect
+      const config = {
+        clientDisplayName: "Nexly",
+        environment: "production",
+        userId: phylloUserId,
+        token: sdk_token,
+        redirect: false,
+        workPlatformId: null,
+      };
+
+      const phylloConnect = (window as any).PhylloConnect.initialize(config);
+
+      phylloConnect.on("accountConnected", async () => {
+        toast({ title: "Account connected! Syncing data..." });
+        await syncPhylloAccounts(phylloUserId);
+      });
+
+      phylloConnect.on("accountDisconnected", () => {
+        toast({ title: "Account disconnected", variant: "destructive" });
+      });
+
+      phylloConnect.on("exit", (reason: string) => {
+        setPhylloLoading(false);
+        if (reason === "error") {
+          toast({ title: "Connection failed", description: "Please try again", variant: "destructive" });
+        }
+      });
+
+      phylloConnect.on("tokenExpired", () => {
+        toast({ title: "Session expired", description: "Please try connecting again", variant: "destructive" });
+        setPhylloLoading(false);
+      });
+
+      phylloConnect.open();
+    } catch (error: any) {
+      console.error("Phyllo connect error:", error);
+      toast({
+        title: "Connection Error",
+        description: error.message || "Failed to initialize Phyllo",
+        variant: "destructive",
+      });
+      setPhylloLoading(false);
+    }
+  }, [profile, toast]);
+
+  const syncPhylloAccounts = async (phylloUserId: string) => {
+    setPhylloSyncing(true);
+    try {
+      const session = await supabase.auth.getSession();
+      const token = session.data.session?.access_token;
+
+      const res = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/phyllo?action=fetch_accounts&phyllo_user_id=${phylloUserId}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+          },
+        }
+      );
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Failed to sync accounts");
+      }
+
+      const result = await res.json();
+      toast({
+        title: "Sync Complete!",
+        description: `${result.total} account(s) synced successfully`,
+      });
+      fetchAccounts();
+    } catch (error: any) {
+      toast({
+        title: "Sync Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setPhylloSyncing(false);
+      setPhylloLoading(false);
+    }
+  };
+
+  const loadPhylloSDK = (): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      if ((window as any).PhylloConnect) {
+        resolve();
+        return;
+      }
+      const script = document.createElement("script");
+      script.src = "https://cdn.getphyllo.com/connect/v2/phyllo-connect.js";
+      script.async = true;
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error("Failed to load Phyllo SDK"));
+      document.head.appendChild(script);
+    });
+  };
+
+  // ─── Manual Add ──────────────────────────────────────────────
   const handleAddAccount = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!profile) return;
 
-    // Validate all input fields
     const validation = socialAccountSchema.safeParse({
       platform: newPlatform || undefined,
       username: newUsername,
@@ -79,10 +221,10 @@ const SocialAccounts = () => {
 
     if (!validation.success) {
       const firstError = validation.error.errors[0];
-      toast({ 
-        title: "Validation Error", 
-        description: firstError?.message || "Please check your input", 
-        variant: "destructive" 
+      toast({
+        title: "Validation Error",
+        description: firstError?.message || "Please check your input",
+        variant: "destructive",
       });
       return;
     }
@@ -118,14 +260,11 @@ const SocialAccounts = () => {
 
   const handleSetPrimary = async (accountId: string) => {
     if (!profile) return;
-
-    // Remove primary from all
     await supabase
       .from("social_accounts")
       .update({ is_primary: false })
       .eq("profile_id", profile.id);
 
-    // Set new primary
     await supabase
       .from("social_accounts")
       .update({ is_primary: true })
@@ -142,7 +281,6 @@ const SocialAccounts = () => {
 
   const handleDelete = async (accountId: string) => {
     if (!confirm("Are you sure you want to remove this account?")) return;
-
     await supabase.from("social_accounts").delete().eq("id", accountId);
     toast({ title: "Account removed" });
     fetchAccounts();
@@ -196,99 +334,130 @@ const SocialAccounts = () => {
             </p>
           </div>
 
-          <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-            <DialogTrigger asChild>
-              <Button className="btn-accent gap-2" disabled={availablePlatforms.length === 0}>
-                <Plus className="w-4 h-4" />
-                Add Account
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-md">
-              <DialogHeader>
-                <DialogTitle>Add Social Account</DialogTitle>
-              </DialogHeader>
-              <form onSubmit={handleAddAccount} className="space-y-4">
-                <div className="space-y-2">
-                  <Label>Platform *</Label>
-                  <Select value={newPlatform} onValueChange={setNewPlatform}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select platform" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {availablePlatforms.map((p) => (
-                        <SelectItem key={p.value} value={p.value}>
-                          <span className="flex items-center gap-2">
-                            <span>{p.emoji}</span>
-                            <span>{p.label}</span>
-                          </span>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+          <div className="flex gap-2">
+            {/* Phyllo Auto-Connect Button */}
+            <Button
+              onClick={handlePhylloConnect}
+              disabled={phylloLoading || phylloSyncing}
+              className="gap-2 bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90"
+            >
+              {phylloLoading || phylloSyncing ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <Zap className="w-4 h-4" />
+              )}
+              {phylloSyncing ? "Syncing..." : phylloLoading ? "Connecting..." : "Auto-Connect"}
+            </Button>
 
-                <div className="space-y-2">
-                  <Label>Username *</Label>
-                  <Input
-                    placeholder="@yourusername"
-                    value={newUsername}
-                    onChange={(e) => setNewUsername(e.target.value)}
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Profile URL</Label>
-                  <Input
-                    type="url"
-                    placeholder="https://..."
-                    value={newProfileUrl}
-                    onChange={(e) => setNewProfileUrl(e.target.value)}
-                  />
-                </div>
-
-                <div className="grid grid-cols-3 gap-4">
+            {/* Manual Add */}
+            <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+              <DialogTrigger asChild>
+                <Button variant="outline" className="gap-2" disabled={availablePlatforms.length === 0}>
+                  <Plus className="w-4 h-4" />
+                  Add Manually
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-md">
+                <DialogHeader>
+                  <DialogTitle>Add Social Account</DialogTitle>
+                </DialogHeader>
+                <form onSubmit={handleAddAccount} className="space-y-4">
                   <div className="space-y-2">
-                    <Label>Followers</Label>
+                    <Label>Platform *</Label>
+                    <Select value={newPlatform} onValueChange={setNewPlatform}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select platform" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {availablePlatforms.map((p) => (
+                          <SelectItem key={p.value} value={p.value}>
+                            <span className="flex items-center gap-2">
+                              <span>{p.emoji}</span>
+                              <span>{p.label}</span>
+                            </span>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Username *</Label>
                     <Input
-                      type="number"
-                      placeholder="10000"
-                      value={newFollowers}
-                      onChange={(e) => setNewFollowers(e.target.value)}
+                      placeholder="@yourusername"
+                      value={newUsername}
+                      onChange={(e) => setNewUsername(e.target.value)}
+                      required
                     />
                   </div>
-                  <div className="space-y-2">
-                    <Label>Total Views</Label>
-                    <Input
-                      type="number"
-                      placeholder="500000"
-                      value={newViews}
-                      onChange={(e) => setNewViews(e.target.value)}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label>Eng. Rate %</Label>
-                    <Input
-                      type="number"
-                      step="0.1"
-                      placeholder="4.5"
-                      value={newEngagement}
-                      onChange={(e) => setNewEngagement(e.target.value)}
-                    />
-                  </div>
-                </div>
 
-                <div className="flex justify-end gap-2 pt-4">
-                  <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>
-                    Cancel
-                  </Button>
-                  <Button type="submit" disabled={isSubmitting || !newPlatform || !newUsername}>
-                    {isSubmitting ? "Adding..." : "Add Account"}
-                  </Button>
-                </div>
-              </form>
-            </DialogContent>
-          </Dialog>
+                  <div className="space-y-2">
+                    <Label>Profile URL</Label>
+                    <Input
+                      type="url"
+                      placeholder="https://..."
+                      value={newProfileUrl}
+                      onChange={(e) => setNewProfileUrl(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="space-y-2">
+                      <Label>Followers</Label>
+                      <Input
+                        type="number"
+                        placeholder="10000"
+                        value={newFollowers}
+                        onChange={(e) => setNewFollowers(e.target.value)}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Total Views</Label>
+                      <Input
+                        type="number"
+                        placeholder="500000"
+                        value={newViews}
+                        onChange={(e) => setNewViews(e.target.value)}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Eng. Rate %</Label>
+                      <Input
+                        type="number"
+                        step="0.1"
+                        placeholder="4.5"
+                        value={newEngagement}
+                        onChange={(e) => setNewEngagement(e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end gap-2 pt-4">
+                    <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>
+                      Cancel
+                    </Button>
+                    <Button type="submit" disabled={isSubmitting || !newPlatform || !newUsername}>
+                      {isSubmitting ? "Adding..." : "Add Account"}
+                    </Button>
+                  </div>
+                </form>
+              </DialogContent>
+            </Dialog>
+          </div>
+        </div>
+
+        {/* Auto-Connect Info Banner */}
+        <div className="mb-6 p-4 rounded-2xl bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20">
+          <div className="flex items-start gap-3">
+            <Zap className="w-5 h-5 text-primary mt-0.5" />
+            <div>
+              <p className="font-semibold text-sm text-foreground">Auto-Connect with Phyllo</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                Click "Auto-Connect" to securely link your social accounts and automatically import 
+                your real follower counts, views, and engagement rates. No manual entry needed!
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Accounts List */}
@@ -391,19 +560,25 @@ const SocialAccounts = () => {
             <p className="text-muted-foreground mb-6 max-w-md mx-auto">
               Connect your social media accounts to let brands see your stats and reach
             </p>
-            <Button onClick={() => setDialogOpen(true)} className="btn-accent gap-2">
-              <Plus className="w-4 h-4" />
-              Add Your First Account
-            </Button>
+            <div className="flex justify-center gap-3">
+              <Button onClick={handlePhylloConnect} className="gap-2 bg-gradient-to-r from-primary to-accent text-primary-foreground">
+                <Zap className="w-4 h-4" />
+                Auto-Connect
+              </Button>
+              <Button variant="outline" onClick={() => setDialogOpen(true)} className="gap-2">
+                <Plus className="w-4 h-4" />
+                Add Manually
+              </Button>
+            </div>
           </div>
         )}
 
-        {/* Info Card */}
+        {/* Tip Card */}
         <div className="mt-8 p-6 rounded-2xl bg-secondary/50 border border-border">
           <h4 className="font-semibold mb-2">💡 Tip</h4>
           <p className="text-sm text-muted-foreground">
-            Keep your stats up to date! Brands are more likely to reach out when they can see 
-            accurate follower counts and engagement rates. Set your most active platform as primary.
+            Use Auto-Connect for accurate, verified stats that brands trust more. 
+            Manually added stats can be updated anytime but may carry less weight with brands.
           </p>
         </div>
       </div>
