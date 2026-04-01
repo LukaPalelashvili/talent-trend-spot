@@ -46,12 +46,19 @@ Deno.serve(async (req) => {
     }
 
     const supabaseUrl = Deno.env.get("SUPABASE_URL");
-    const supabaseAnonKey = Deno.env.get("SUPABASE_PUBLISHABLE_KEY");
-    if (!supabaseUrl || !supabaseAnonKey) {
+    const supabaseAnonKey = Deno.env.get("SUPABASE_PUBLISHABLE_KEY") || Deno.env.get("SUPABASE_ANON_KEY");
+    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+    
+    if (!supabaseUrl || !supabaseAnonKey || !supabaseServiceKey) {
+      console.error("Missing env vars:", { 
+        url: !!supabaseUrl, 
+        anonKey: !!supabaseAnonKey, 
+        serviceKey: !!supabaseServiceKey 
+      });
       throw new Error("Supabase environment variables not configured");
     }
 
-    const supabase = supabaseAdmin();
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
     const { data: { user }, error: authError } = await createClient(
       supabaseUrl,
       supabaseAnonKey,
