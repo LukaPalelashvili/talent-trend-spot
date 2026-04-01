@@ -71,11 +71,8 @@ const SocialAccounts = () => {
     setPhylloLoading(true);
 
     try {
-      // 1. Get SDK token from our edge function
-      const { data, error } = await supabase.functions.invoke("phyllo", {
-        body: null,
-        headers: {},
-      });
+      // Get auth session
+      const session = await supabase.auth.getSession();
 
       // Use query params approach
       const session = await supabase.auth.getSession();
