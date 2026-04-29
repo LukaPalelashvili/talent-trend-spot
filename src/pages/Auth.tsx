@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
+import { lovable } from "@/integrations/lovable";
 
 type UserType = "brand" | "creator" | null;
 type AuthMode = "select" | "login" | "signup";
